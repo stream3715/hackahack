@@ -6,7 +6,7 @@ services:
       - common
     environment:
       TZ: Asia/Tokyo
-      FAKE_DOMAIN: $FAKEDOMAIN
+      FAKE_DOMAIN: $FAKE_DOMAIN
       HTTP_PORT: $PORT
     ports:
       - 8080:8080
@@ -24,7 +24,7 @@ services:
       - "53:53/udp"
       - "53:53/tcp"
     extra_hosts:
-      - "$FAKEDOMAIN:$HOSTIP"
+      - "$FAKE_DOMAIN:$HOST_IP"
     cap_add:
       - NET_ADMIN
 
