@@ -39,7 +39,7 @@ func RequestArchiveUrl(path string) (string, int, error) {
 
 	//クエリパラメータ
 	params := request.URL.Query()
-	params.Add("url", fakeDomain+path)
+	params.Add("url", "https://"+fakeDomain+path)
 	request.URL.RawQuery = params.Encode()
 
 	timeout := time.Duration(5 * time.Second)
@@ -67,7 +67,7 @@ func RequestArchiveUrl(path string) (string, int, error) {
 		return "", 404, errors.New("ARCHIVE_NOT_FOUND")
 	}
 
-	addIf_ := regexp.MustCompile("/" + fakeDomain)
-	archiveUrl := addIf_.ReplaceAllString(data.ArchivedSnapshots.Closest.URL, "if_/"+fakeDomain)
+	addIf_ := regexp.MustCompile("/https://" + fakeDomain)
+	archiveUrl := addIf_.ReplaceAllString(data.ArchivedSnapshots.Closest.URL, "if_/https://"+fakeDomain)
 	return archiveUrl, response.StatusCode, nil
 }

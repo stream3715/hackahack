@@ -1,0 +1,42 @@
+version: '3.9'
+services:
+  go:
+    image: stream3715/hackahack:0.2
+    networks:
+      - common
+    environment:
+      TZ: Asia/Tokyo
+      FAKE_DOMAIN: ${FAKE_DOMAIN}
+      HTTP_PORT: ${PORT}
+    ports:
+      - 8080:8080
+    security_opt:
+      - apparmor:unconfined
+    cap_add:
+      - SYS_PTRACE
+
+  dnsmasq:
+    restart: always
+    image: 4km3/dnsmasq
+    container_name: dnsmasq
+    ports:
+      - "53:53/udp"
+      - "53:53/tcp"
+    extra_hosts:
+      - "${FAKE_DOMAIN}:${HOST_IP}"
+    cap_add:
+      - NET_ADMIN
+
+  nginx:
+    container_name: "nginx"
+    build:
+      context: .
+      dockerfile: ./nginx/Dockerfile
+    ports:
+      - "443:443"
+    networks:
+      - common
+
+networks:
+  common:
+    driver: bridge

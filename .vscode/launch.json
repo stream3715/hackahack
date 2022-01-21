@@ -20,7 +20,7 @@
             "mode": "auto",
             "program": "${fileDirname}",
             "env": {
-                "FAKE_DOMAIN": "https://cdn-data.hackadoll.com"
+                "FAKE_DOMAIN": "cdn-data.hackadoll.com"
             }
         }
     ]

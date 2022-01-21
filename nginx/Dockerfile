@@ -14,7 +14,7 @@ FROM nginx:latest
 # ローカルの default.conf をコンテナ内の /etc/nginx/conf.d/ にコピーする
 COPY ./nginx/default.conf /etc/nginx/conf.d/
 COPY --from=mkcert /certs /etc/nginx/certs
-COPY --from=mkcert /certs/cert.pem /usr/share/nginx/html/cert.pem
+COPY --from=mkcert /certs/cert.pem /usr/share/nginx/html/certs/cert.pem
 
 # ポート設定
 EXPOSE 443
