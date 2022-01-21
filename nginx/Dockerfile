@@ -17,4 +17,4 @@ FROM nginx:latest
 COPY ./nginx/default.conf /etc/nginx/conf.d/
 COPY --from=mkcert /certs /etc/nginx/certs
 COPY --from=mkcert /certs/ca.pem /usr/share/nginx/html/certs/ca.pem
-COPY --from=mkcert /certs/ca.pem /usr/share/nginx/html/certs/ca.zip
+COPY --from=mkcert /certs/ca.zip /usr/share/nginx/html/certs/ca.zip
