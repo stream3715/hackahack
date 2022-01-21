@@ -1,0 +1,48 @@
+version: '3.9'
+services:
+  go:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./:/go/src/app
+    networks:
+      - common
+    environment:
+      TZ: Asia/Tokyo
+      GIN_MODE: debug
+      FAKE_DOMAIN: https://cdn-data.hackadoll.com
+      # HTTP_PORT: 8080
+    ports:
+      - 8080:8080
+      - 2345:2345
+    security_opt:
+      - apparmor:unconfined
+    cap_add:
+      - SYS_PTRACE
+
+  dnsmasq:
+    restart: always
+    image: andyshinn/dnsmasq
+    container_name: dnsmasq
+    ports:
+      - "53:53/udp"
+      - "53:53/tcp"
+    extra_hosts:
+      - "cdn-data.hackadoll.com:192.168.11.200"
+    cap_add:
+      - NET_ADMIN
+
+  nginx:
+    container_name: "nginx"
+    build:
+      context: .
+      dockerfile: ./nginx/Dockerfile
+    ports:
+      - "443:443"
+    networks:
+      - common
+
+networks:
+  common:
+    driver: bridge
