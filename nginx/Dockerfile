@@ -16,6 +16,3 @@ FROM nginx:latest
 COPY ./nginx/default.conf /etc/nginx/conf.d/
 COPY --from=mkcert /certs /etc/nginx/certs
 COPY --from=mkcert /certs/ca.pem /usr/share/nginx/html/certs/ca.pem
-
-# ポート設定
-EXPOSE 443
