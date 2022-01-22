@@ -6,11 +6,17 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/httplog"
 )
 
 func main() {
+	l := httplog.NewLogger("app", httplog.Options{
+		JSON: true,
+	})
+
 	r := chi.NewRouter()
+	r.Use(httplog.RequestLogger(l))
 	checkEnv()
 
 	port := os.Getenv("HTTP_PORT")
